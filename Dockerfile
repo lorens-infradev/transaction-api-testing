@@ -37,7 +37,9 @@ RUN chmod -R 775 storage bootstrap/cache && \
 EXPOSE 8080
 
 # Start Laravel using artisan serve
-CMD php artisan config:clear && \
+CMD touch database/database.sqlite && \
+    php artisan migrate:fresh --seed --force && \
+    php artisan config:clear && \
     php artisan route:clear && \
     php artisan view:clear && \
     php artisan serve --host=0.0.0.0 --port=8080
